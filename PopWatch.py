@@ -33,6 +33,7 @@ def hottopic_stock(url):
     soup = url_to_html(url)
     html_source = soup.find_all("div", {"class" : "availability-msg"})
     match = re.search(r'\bIn Stock\b',str(html_source))
+    print match
     if match: #Return true if In Stock
         return True
     else: #Return false if Out of Stock
@@ -43,6 +44,7 @@ def boxlunch_stock(url):
     soup = url_to_html(url)
     html_source = soup.find_all("div", {"class": "availability"})
     match = re.search(r'\bIn Stock\b', str(html_source))
+    print match
     if match: #Return true if In Stock
         return True
     else: #Return false if Out of Stock
@@ -53,6 +55,7 @@ def walmart_stock(url):
     soup = url_to_html(url)
     html_source = soup.find_all("div", {"class": "prod-ProductPrimaryCTA"})
     match = re.search(r'\bAdd to Cart\b',str(html_source))
+    print match
     if match: #Return True if in stock
         return True
     else: #Return False if out of stock
@@ -62,6 +65,7 @@ def barnesandnoble_stock(url):
     soup = url_to_html(url)
     html_source = soup.find_all("section", {"id": "skuSelection"})
     match = re.search(r'\bAdd to Bag\b',str(html_source))
+    print match
     if match: #Return True if in stock
         return True
     else: #Return False if out of stock
@@ -72,11 +76,42 @@ def gamestop_stock(url):
     soup = url_to_html(url)
     html_source = soup.find_all("div", {"class": "button qq"})
     match = re.search(r'\bAdd to Cart\b',str(html_source))
+    print match
     if match: #Return True if in stock
         return True
     else: #Return False if out of stock
         return False
 
+def thinkgeek_stock(url):
+    soup = url_to_html(url)
+    html_source = soup.find_all("span", {"class": "in_stock"})
+    match = re.search(r'\bInStock\b',str(html_source))
+    print match
+    if match: #Return True if in stock
+       return True
+    else: #return false
+       return False
+
+
+def blizzard_stock(url):
+    soup = url_to_html(url)
+    html_source = soup.find_all("div", {"class": "add-to-cart v-centered-content"})
+    match = re.search(r'\bAdd to Cart\b',str(html_source))
+    print match
+    if match:
+        return True
+    else:
+        return False
+
+def fugitive_stock(url):
+    soup = url_to_html(url)
+    html_source = soup.find_all("button", {"class": "purchase button"})
+    match = re.search(r'\bAdd to Cart\b',str(html_source))
+    print match
+    if match:
+        return True
+    else:
+        return False
 
 def CheckFunko(Site, Title, url):
     global timout
@@ -92,6 +127,12 @@ def CheckFunko(Site, Title, url):
         status = barnesandnoble_stock(url)
     elif Site == 'GameStop':
         status = gamestop_stock(url)
+    elif Site == 'Thinkgeek':
+        status = thinkgeek_stock(url)
+    elif Site == 'Blizzard':
+        status = blizzard_stock(url)
+    elif Site == 'Fugitive Toys':
+        status = fugitive_stock(url)
     else:
         status = False
     if status == True:
